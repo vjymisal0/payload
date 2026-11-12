@@ -1996,6 +1996,14 @@ describe('Fields', () => {
     const point = [7, -7]
     const localized = [5, -2]
     const group = { point: [1, 9] }
+    const createdPointIDs: (number | string)[] = []
+
+    afterEach(async () => {
+      for (const id of createdPointIDs) {
+        await payload.delete({ collection: 'point-fields', id })
+      }
+      createdPointIDs.length = 0
+    })
 
     beforeEach(async () => {
       const findDoc = await payload.find({
@@ -2054,6 +2062,7 @@ describe('Fields', () => {
           point,
         },
       })
+      createdPointIDs.push(created.id)
 
       // Update an unrelated field and ensure the point field is still
       // present in the response - https://github.com/payloadcms/payload/issues/17461
@@ -2086,6 +2095,7 @@ describe('Fields', () => {
           point,
         },
       })
+      createdPointIDs.push(created.id)
 
       const updated = await payload.update({
         id: created.id,
