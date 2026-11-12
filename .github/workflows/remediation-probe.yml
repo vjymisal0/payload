@@ -1,0 +1,12 @@
+name: Remediation trigger probe
+on:
+  push:
+    branches: ['remediation-ci/payload-validation-20261112']
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - run: echo 'Hosted validation trigger reached'
